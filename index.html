@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitSnap - Deriv Tick Analysis</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Professional market analysis and trading intelligence for Deriv">
+    <meta name="keywords" content="deriv, trading, analysis, digitsnap, market, finance">
+    <meta name="author" content="DigitSnap">
+    <meta name="theme-color" content="#00d4ff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DigitSnap">
+    <meta name="msapplication-TileColor" content="#00d4ff">
+    <meta name="msapplication-config" content="/digitsnap/browserconfig.xml">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/digitsnap/manifest.json">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/digitsnap/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/digitsnap/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/digitsnap/icons/icon-192x192.png">
+    <link rel="mask-icon" href="/digitsnap/icons/safari-pinned-tab.svg" color="#00d4ff">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/digitsnap/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Deriv OAuth Modal -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <svg class="auth-logo" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" fill="#00d4ff" stroke="#0099cc" stroke-width="2"/>
+                    <rect x="18" y="20" width="24" height="16" rx="3" fill="#0a0a0a" stroke="#00d4ff" stroke-width="1.5"/>
+                    <text x="30" y="32" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#00d4ff">DS</text>
+                </svg>
+                <h2 id="auth-title">DigitSnap Terminal</h2>
+                <p id="auth-subtitle">Professional market analysis and trading intelligence</p>
+            </div>
+            
+            <!-- Deriv OAuth Login -->
+            <div id="deriv-auth-form" class="auth-form">
+                <div class="deriv-info">
+                    <div class="info-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure authentication via Deriv</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-user-check"></i>
+                        <span>No passwords to remember</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-link"></i>
+                        <span>Used for authentication only</span>
+                    </div>
+                </div>
+                
+                <button type="button" class="deriv-auth-btn" onclick="loginWithDeriv()">
+                    <div class="deriv-logo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" fill="#FF444F"/>
+                            <path d="M12 8L8 10V14L12 16L16 14V10L12 8Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <span>Login with Deriv</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <button type="button" class="deriv-signup-btn" onclick="window.open('https://track.deriv.com/__rVf-VSveO71k0YPxVS0A2Nd7ZgqdRLk/1/', '_blank')">
+                    <div class="deriv-logo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" fill="#FF444F"/>
+                            <path d="M12 8L8 10V14L12 16L16 14V10L12 8Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <span>New to Deriv? Create Account</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+                
+                <div class="auth-footer">
+                    <p class="terms-text">
+                        By continuing, you agree to our 
+                        <a href="#" class="terms-link">Terms of Service</a> and 
+                        <a href="#" class="terms-link">Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-header">
+                <i class="fas fa-credit-card payment-icon"></i>
+                <h2>Account Activation Required</h2>
+                <p>Your account has been deactivated. Please make a payment to reactivate your account and access DigitSnap.</p>
+            </div>
+
+            <div class="payment-plans">
+                <div class="plan-card featured">
+                    <div class="plan-badge">One-Time Payment</div>
+                    <h3>DigitSnap Access</h3>
+                    <div class="plan-price">
+                        <span class="currency">$</span>
+                        <span class="amount">250</span>
+                        <span class="period">one-time</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Lifetime DigitSnap Access</li>
+                        <li><i class="fas fa-check"></i> All 10+ Volatility Markets</li>
+                        <li><i class="fas fa-check"></i> Real-time Predictions</li>
+                        <li><i class="fas fa-check"></i> Advanced Analytics</li>
+                        <li><i class="fas fa-check"></i> 24/7 Support</li>
+                        <li><i class="fas fa-check"></i> Future Updates Included</li>
+                        <li><i class="fas fa-check"></i> No Monthly Fees</li>
+                    </ul>
+                    
+                    <!-- Payment Methods -->
+                    <div class="payment-methods">
+                        <h4>Payment Method:</h4>
+                        <div class="payment-options">
+                            <button class="payment-option active" onclick="selectPaymentMethod('usdt', this)">
+                                <i class="fab fa-bitcoin"></i>
+                                <span>Pay with USDT</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-full" onclick="handlePayment('lifetime')">
+                        <i class="fab fa-bitcoin"></i>
+                        <span id="payment-button-text">Pay with USDT - $250</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="payment-footer">
+                <p class="payment-note">
+                    <i class="fas fa-shield-alt"></i>
+                    Secure payment processing with 256-bit SSL encryption
+                </p>
+                <p class="payment-terms">
+                    By proceeding, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="welcome-modal" style="display: none;">
+        <div class="welcome-modal-content">
+            <div class="welcome-header">
+                <div class="welcome-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Welcome to DigitSnap!</h2>
+                <p>Your account has been successfully authenticated</p>
+            </div>
+            
+            <div class="welcome-details">
+                <div id="welcome-user-info">
+                    <!-- User details will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="welcome-footer">
+                <button class="btn btn-primary btn-full" onclick="hideWelcomeModal()">
+                    <i class="fas fa-rocket"></i>
+                    <span>Start Trading</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <svg class="logo-svg" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background circle with metallic gradient -->
+                    <defs>
+                        <linearGradient id="metalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#0099cc;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#007acc;stop-opacity:1" />
+                        </linearGradient>
+                        <pattern id="techGrid" width="4" height="4" patternUnits="userSpaceOnUse">
+                            <path d="M 4 0 L 0 0 0 4" fill="none" stroke="#66ccff" stroke-width="0.5" opacity="0.4"/>
+                        </pattern>
+                    </defs>
+                    
+                    <!-- Outer ring -->
+                    <circle cx="30" cy="30" r="28" fill="url(#metalGradient)" stroke="#007acc" stroke-width="2"/>
+                    
+                    <!-- Tech grid overlay -->
+                    <circle cx="30" cy="30" r="26" fill="url(#techGrid)"/>
+                    
+                    <!-- Central display with angular design -->
+                    <polygon points="18,18 42,18 44,20 44,36 42,38 18,38 16,36 16,20" fill="#0a0a0a" stroke="#00d4ff" stroke-width="1.5"/>
+                    <text x="30" y="32" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#00d4ff">01</text>
+                    
+                    <!-- Angular data flow lines -->
+                    <path d="M 6 12 L 22 8 L 38 8 L 54 12" stroke="#0099cc" stroke-width="2" fill="none" opacity="0.8"/>
+                    <path d="M 6 48 L 22 52 L 38 52 L 54 48" stroke="#0099cc" stroke-width="2" fill="none" opacity="0.8"/>
+                    
+                    <!-- Tech nodes -->
+                    <rect x="8" y="10" width="4" height="4" fill="#00d4ff" transform="rotate(45 10 12)"/>
+                    <rect x="48" y="10" width="4" height="4" fill="#00d4ff" transform="rotate(45 50 12)"/>
+                    <rect x="8" y="46" width="4" height="4" fill="#00d4ff" transform="rotate(45 10 48)"/>
+                    <rect x="48" y="46" width="4" height="4" fill="#00d4ff" transform="rotate(45 50 48)"/>
+                    
+                    <!-- Pulse animation circles -->
+                    <circle cx="30" cy="30" r="20" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.6">
+                        <animate attributeName="r" values="20;25;20" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                
+                <div class="brand-text">
+                    <h1 class="title">DigitSnap</h1>
+                    <p class="subtitle">Advanced Market Intelligence</p>
+                </div>
+            </div>
+            
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Markets</span>
+                    <span class="stat-value" id="active-markets">0/10</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Status</span>
+                    <span class="stat-value connection-status" id="connection-status">●</span>
+                </div>
+            </div>
+            
+            <!-- User Info Section (Hidden until authenticated) -->
+            <div id="user-info" class="user-info" style="display: none;">
+                <div class="user-details">
+                    <div class="user-name" id="user-name">Loading...</div>
+                    <div class="user-account" id="user-account">Account: Loading...</div>
+                </div>
+                <button class="logout-btn" onclick="logout()" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="symbol-select">Analysis Mode:</label>
+                <select id="symbol-select" onchange="updateSymbol(this.value)">
+                    <option value="ALL" selected>🌐 All Volatility Markets</option>
+                    <option value="R_100">⚡ Volatility 100 Index</option>
+                    <option value="R_75">⚡ Volatility 75 Index</option>
+                    <option value="R_50">⚡ Volatility 50 Index</option>
+                    <option value="R_25">⚡ Volatility 25 Index</option>
+                    <option value="R_10">⚡ Volatility 10 Index</option>
+                    <option value="RDBEAR">🐻 Bear Market Analysis</option>
+                    <option value="RDBULL">🐂 Bull Market Analysis</option>
+                    <option value="1HZ10V">⚡ 1s Volatility 10 Index</option>
+                    <option value="1HZ15V">⚡ 1s Volatility 15 Index</option>
+                    <option value="1HZ30V">⚡ 1s Volatility 30 Index</option>
+                    <option value="1HZ50V">⚡ 1s Volatility 50 Index</option>
+                    <option value="1HZ75V">⚡ 1s Volatility 75 Index</option>
+                    <option value="1HZ90V">⚡ 1s Volatility 90 Index</option>
+                    <option value="1HZ100V">⚡ 1s Volatility 100 Index</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="tick-count">Data Points:</label>
+                <select id="tick-count" onchange="updateTickCount(parseInt(this.value))">
+                    <option value="50">50 Ticks</option>
+                    <option value="100">100 Ticks</option>
+                    <option value="120" selected>120 Ticks</option>
+                    <option value="200">200 Ticks</option>
+                    <option value="500">500 Ticks</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <!-- Extremes Card -->
+            <div class="stat-card extremes-card">
+                <h3>Signal Range</h3>
+                <div class="extremes-container">
+                    <div class="extreme-item">
+                        <span class="label">Peak</span>
+                        <span id="highest-digit" class="extreme-value">--</span>
+                    </div>
+                    <div class="extreme-item">
+                        <span class="label">Low</span>
+                        <span id="lowest-digit" class="extreme-value">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Highlights -->
+            <div class="stat-card prediction-card">
+                <h3>🎯 Pattern Recognition</h3>
+                <p class="card-description">High-frequency pattern analysis - targeting prediction opportunities</p>
+                <div id="prediction-highlights" class="prediction-container">
+                    <div class="no-predictions">No high-frequency patterns detected yet...</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Connected to Deriv API • Advanced Technical Analysis • Real-time Pattern Recognition</p>
+        </footer>
+    </div>
+    
+    <!-- PWA Scripts -->
+    <script src="/digitsnap/pwa-helper.js"></script>
+    <script src="/digitsnap/script.js"></script>
+</body>
+</html>
