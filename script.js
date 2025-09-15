@@ -1102,7 +1102,7 @@ async function fetchUserInfoFromAPI(userData) {
     return new Promise((resolve, reject) => {
         try {
             // Create a WebSocket connection to get user details
-            const apiUrl = 'wss://ws.derivws.com/websockets/v3?app_id=70827';
+            const apiUrl = 'wss://ws.derivws.com/websockets/v3?app_id=100912';
             const tempWs = new WebSocket(apiUrl);
             
             tempWs.onopen = () => {
