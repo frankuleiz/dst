@@ -1212,9 +1212,9 @@ async function validateUserAccess(userData) {
         }
         
         // Fetch data from the DerivLite API
-        console.log('📡 Attempting to fetch from API: https://github.com/frankuleiz/digit-snap-data/blob/main/users.json');
+        console.log('📡 Attempting to fetch from API: https://frankuleiz.github.io/digit-snap-data/users.json');
         
-        const response = await fetch('https://github.com/frankuleiz/digit-snap-data/blob/main/users.json', {
+        const response = await fetch('https://frankuleiz.github.io/digit-snap-data/users.json', {
             method: 'GET'
         });
         
