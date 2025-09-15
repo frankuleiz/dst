@@ -667,7 +667,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Deriv OAuth Configuration
 const DERIV_OAUTH_CONFIG = {
-    app_id: '70827',
+    app_id: '100912',
     oauth_url: 'https://oauth.deriv.com/oauth2/authorize',
     redirect_uri: window.location.origin + window.location.pathname, // Current page as redirect
     scope: 'read'
